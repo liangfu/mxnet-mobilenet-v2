@@ -37,8 +37,8 @@ if __name__ == '__main__':
     parser.set_defaults(
         # network
         network          = 'mobilenetv2',
-        multiplier       = 1.4, 
-        model_prefix     = os.path.join(thisdir,'../models/mobilenetv2-1_4'), 
+        multiplier       = 1.0, 
+        model_prefix     = os.path.join(thisdir,'models/mobilenetv2-1_0'), 
 
         # data
         data_train       = '/home/shared/ILSVRC2012_img_train_output.rec',
@@ -52,10 +52,12 @@ if __name__ == '__main__':
                                   # 256.0/x, e.g. 0.533 for 480
         # train
         num_epochs       = 120,
-        lr_factor        = 0.1,
-        lr_step_epochs   = '30,60,90',
+        lr               = 0.045,
+        lr_factor        = 0.98,
+        lr_step_epochs   = ','.join([str(i) for i in range(1,100)]),
+        wd               = 0.00004, 
         dtype            = 'float32', 
-        batch_size       = 32,
+        batch_size       = 128,
         gpus             = '0,1',
         optimizer        = 'rmsprop',
         # monitor          = 20, 
