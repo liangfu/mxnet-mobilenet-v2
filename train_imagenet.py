@@ -19,6 +19,7 @@ import os
 import argparse
 import logging
 logging.basicConfig(level=logging.DEBUG)
+import time
 from common import find_mxnet, data, fit
 from common.util import download_file
 import mxnet as mx
@@ -52,14 +53,14 @@ if __name__ == '__main__':
                                   # 256.0/x, e.g. 0.533 for 480
         # train
         num_epochs       = 120,
-        lr               = 0.045,
+        lr               = 0.05,
         lr_factor        = 0.98,
-        lr_step_epochs   = ','.join([str(i) for i in range(1,100)]),
+        lr_step_epochs   = ','.join([str(i) for i in range(1,120)]),
         wd               = 0.00004, 
         dtype            = 'float32', 
-        batch_size       = 128,
-        gpus             = '0,1',
-        optimizer        = 'rmsprop',
+        batch_size       = 165,
+        gpus             = '0,1,2',
+        optimizer        = 'sgd',
         # monitor          = 20, 
         load_epoch       = None,
         top_k            = 5,
@@ -75,5 +76,14 @@ if __name__ == '__main__':
     # print(sym.get_internals()['mobilenetv20_features_conv0_weight'].attr_dict()['mobilenetv20_features_conv0_weight']['__shape__'])
     # exit()
 
+    # set up logger
+    logger = logging.getLogger()
+    fh = logging.FileHandler(os.path.join('log',time.strftime('%F-%T',time.localtime()).replace(':','-')+'.log'))
+    fh.setLevel(logging.DEBUG)
+    # ch = logging.StreamHandler()
+    # ch.setLevel(logging.INFO)
+    logger.addHandler(fh)
+    # logger.addHandler(ch)
+
     # train
-    fit.fit(args, sym, data.get_rec_iter)
+    fit.fit(args, sym, data.get_rec_iter, logger)

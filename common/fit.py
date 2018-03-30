@@ -138,7 +138,7 @@ def add_fit_args(parser):
     return train
 
 
-def fit(args, network, data_loader, **kwargs):
+def fit(args, network, data_loader, logger, **kwargs):
     """
     train a model
     args : argparse returns
@@ -192,7 +192,8 @@ def fit(args, network, data_loader, **kwargs):
     # create model
     model = mx.mod.Module(
         context=devs,
-        symbol=network
+        symbol=network,
+        logger=logger
     )
 
     lr_scheduler = lr_scheduler
@@ -200,7 +201,10 @@ def fit(args, network, data_loader, **kwargs):
         'learning_rate': lr,
         'wd': args.wd,
         'lr_scheduler': lr_scheduler,
-        'multi_precision': True}
+        'multi_precision': True,
+        # 'centered': False,
+        # 'gamma1': 0.95,
+    }
 
     # Only a limited number of optimizers have 'momentum' property
     has_momentum = {'sgd', 'dcasgd', 'nag'}
