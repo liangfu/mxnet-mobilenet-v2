@@ -1,5 +1,10 @@
 # coding=utf-8
-# feel free to contact zhangcycat@gmail.com for furthur discussion
+## initial script written by <zhangcycat@gmail.com>,
+## list of changes made by liangfu <liangfu.chen@harman.com> :
+# 1. add multiplier argument
+# 2. add an argument to global average pooling
+# 3. make number of expansion filters depend on the input tensor shape
+
 import mxnet as mx
 def relu6(data, prefix):
     return mx.sym.clip(data,0,6,name='%s-relu6'%prefix)
@@ -25,8 +30,8 @@ def mobilenet_unit(data, num_filter=1, kernel=(1, 1), stride=(1, 1), pad=(0, 0),
     else:
         return bn
 
-def inverted_residual_unit(data, num_filter, ifshortcut, stride, kernel, pad, expansion_factor, prefix):
-    num_expfilter = int(round(num_filter*expansion_factor))
+def inverted_residual_unit(data, num_in_filter, num_filter, ifshortcut, stride, kernel, pad, expansion_factor, prefix):
+    num_expfilter = int(round(num_in_filter*expansion_factor))
 
     channel_expand = mobilenet_unit(
         data=data,
@@ -68,9 +73,10 @@ def inverted_residual_unit(data, num_filter, ifshortcut, stride, kernel, pad, ex
     else:
         return linear_out
 
-def invresi_blocks(data, t, c, n, s, prefix):
+def invresi_blocks(data, in_c, t, c, n, s, prefix):
     first_block = inverted_residual_unit(
         data=data,
+        num_in_filter=in_c,
         num_filter=c,
         ifshortcut=False,
         stride=(s,s),
@@ -85,6 +91,7 @@ def invresi_blocks(data, t, c, n, s, prefix):
     for i in range(1,n):
         last_residual_block = inverted_residual_unit(
             data=last_residual_block,
+            num_in_filter=in_c,
             num_filter=c,
             ifshortcut=True,
             stride=(1,1),
@@ -125,9 +132,10 @@ class MNetV2Gen(object):
         data = mx.sym.Variable('data')
         self.MNetConfigs.update(configs)
         # first conv2d block
+        first_c = int(round(self.MNetConfigs['firstconv_filter_num']*self.multiplier))
         first_layer = mobilenet_unit(
             data=data,
-            num_filter=int(round(self.MNetConfigs['firstconv_filter_num']*self.multiplier)),
+            num_filter=first_c,
             kernel=(3,3),
             stride=(2,2),
             pad=(1,1),
@@ -135,14 +143,16 @@ class MNetV2Gen(object):
             prefix='first-3x3-conv'
         )
         last_bottleneck_layer = first_layer
+        in_c = first_c
         # bottleneck sequences
         for i, layer_setting in enumerate(self.MNetConfigs['bottleneck_params_list']):
             t, c, n, s = layer_setting
             last_bottleneck_layer = invresi_blocks(
                 data=last_bottleneck_layer,
-                t=t, c=int(round(c*self.multiplier)), n=n, s=s, 
+                in_c=in_c, t=t, c=int(round(c*self.multiplier)), n=n, s=s, 
                 prefix='seq-%d'%i
             )
+            in_c = c
         # last conv2d block before global pooling
         last_fm = mobilenet_unit(
             data=last_bottleneck_layer,
@@ -154,7 +164,8 @@ class MNetV2Gen(object):
             prefix='last-1x1-conv'
         )
         # global average pooling
-        pool = mx.sym.Pooling(data=last_fm, kernel=(7, 7), stride=(1, 1), pool_type="avg", name="global_pool", global_pool=True)
+        pool_size = int(self.data_wh[0] / 32)
+        pool = mx.sym.Pooling(data=last_fm, kernel=(pool_size, pool_size), stride=(1, 1), pool_type="avg", name="global_pool", global_pool=True)
         flatten = mx.sym.Flatten(data=pool, name="flatten")
         fc = mx.symbol.FullyConnected(data=flatten, num_hidden=class_num, name='fc')
         softmax = mx.symbol.SoftmaxOutput(data=fc, name='softmax')
