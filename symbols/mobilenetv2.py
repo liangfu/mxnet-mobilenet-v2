@@ -127,7 +127,7 @@ class MNetV2Gen(object):
         # first conv2d block
         first_layer = mobilenet_unit(
             data=data,
-            num_filter=self.MNetConfigs['firstconv_filter_num']*multiplier,
+            num_filter=int(round(self.MNetConfigs['firstconv_filter_num']*self.multiplier)),
             kernel=(3,3),
             stride=(2,2),
             pad=(1,1),
@@ -140,13 +140,13 @@ class MNetV2Gen(object):
             t, c, n, s = layer_setting
             last_bottleneck_layer = invresi_blocks(
                 data=last_bottleneck_layer,
-                t=t, c=c*multiplier, n=n, s=s, 
+                t=t, c=int(round(c*self.multiplier)), n=n, s=s, 
                 prefix='seq-%d'%i
             )
         # last conv2d block before global pooling
         last_fm = mobilenet_unit(
             data=last_bottleneck_layer,
-            num_filter=int(1280 * multiplier) if multiplier > 1.0 else 1280,
+            num_filter=int(1280 * self.multiplier) if self.multiplier > 1.0 else 1280,
             kernel=(1,1),
             stride=(1,1),
             pad=(0,0),
