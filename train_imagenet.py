@@ -58,7 +58,7 @@ if __name__ == '__main__':
         lr_step_epochs   = ','.join([str(i) for i in range(1,240)]),
         wd               = 0.00004, 
         dtype            = 'float32', 
-        batch_size       = 150,
+        batch_size       = 128,
         gpus             = '0,1',
         optimizer        = 'sgd',
         # monitor          = 20, 

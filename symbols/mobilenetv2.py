@@ -23,7 +23,7 @@ def mobilenet_unit(data, num_filter=1, kernel=(1, 1), stride=(1, 1), pad=(0, 0),
         pad=pad,
         no_bias=True,
         name='%s-conv2d'%prefix)
-    bn = mx.sym.BatchNorm(data=conv, name='%s-batchnorm'%prefix, fix_gamma=True)
+    bn = mx.sym.BatchNorm(data=conv, name='%s-batchnorm'%prefix, fix_gamma=False, use_global_stats=False, eps=1e-5)
     if if_act:
         act = relu6(bn, prefix)
         return act
@@ -87,11 +87,12 @@ def invresi_blocks(data, in_c, t, c, n, s, prefix):
     )
 
     last_residual_block = first_block
+    last_c = c
 
     for i in range(1,n):
         last_residual_block = inverted_residual_unit(
             data=last_residual_block,
-            num_in_filter=in_c,
+            num_in_filter=last_c,
             num_filter=c,
             ifshortcut=True,
             stride=(1,1),
