@@ -52,10 +52,10 @@ if __name__ == '__main__':
         min_random_scale = 0.533, # if input image has min size k, suggest to use
                                   # 256.0/x, e.g. 0.533 for 480
         # train
-        num_epochs       = 240, # default=120 epochs
+        num_epochs       = 480, # default=120 epochs
         lr               = 0.05, # default=0.045 
         lr_factor        = 0.98, # default=0.98
-        lr_step_epochs   = ','.join([str(i) for i in range(1,240)]),
+        lr_step_epochs   = ','.join([str(i) for i in range(1,480)]),
         wd               = 0.00004, 
         dtype            = 'float32', 
         batch_size       = 128,
