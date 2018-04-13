@@ -49,20 +49,21 @@ if __name__ == '__main__':
         num_classes      = 1000,
         num_examples     = 1281167,
         image_shape      = '3,224,224',
+        max_random_scale = 0.534,
         min_random_scale = 0.533, # if input image has min size k, suggest to use
                                   # 256.0/x, e.g. 0.533 for 480
         # train
-        num_epochs       = 480, # default=120 epochs
-        lr               = 0.05, # default=0.045 
-        lr_factor        = 0.98, # default=0.98
-        lr_step_epochs   = ','.join([str(i) for i in range(1,480)]),
+        num_epochs       = 480, # default=480 epochs
+        lr               = 0.045, # default=0.045 
+        lr_factor        = 0.95, # default=0.98
+        lr_step_epochs   = ','.join([str(i) for i in range(217,480)]),
         wd               = 0.00004, 
         dtype            = 'float32', 
         batch_size       = 128,
         gpus             = '0,1',
         optimizer        = 'sgd',
         # monitor          = 20, 
-        load_epoch       = None,
+        load_epoch       = None, # default=None
         top_k            = 5,
     )
     args = parser.parse_args()

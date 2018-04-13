@@ -107,7 +107,7 @@ def add_fit_args(parser):
                        help='weight decay for sgd')
     train.add_argument('--batch-size', type=int, default=128,
                        help='the batch size')
-    train.add_argument('--disp-batches', type=int, default=20,
+    train.add_argument('--disp-batches', type=int, default=100,
                        help='show progress for every n batches')
     train.add_argument('--model-prefix', type=str,
                        help='model prefix')
