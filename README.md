@@ -25,19 +25,19 @@ Since `nnvm` is built to support neural network inference on any device enabled 
 >> python from_mxnet.py
 [14:52:11] src/runtime/opencl/opencl_device_api.cc:205: Initialize OpenCL platform 'Intel Gen OCL Driver'
 [14:52:12] src/runtime/opencl/opencl_device_api.cc:230: opencl(0)='Intel(R) HD Graphics Skylake ULT GT2' cl_device_id=0x7f091bbd2bc0
-elapsed: 3005.0ms (3004.5ms)
+elapsed: 3005.0 ms (3004.5 ms)
 ('TVM prediction top-1:', 162, 'n02088364 beagle\n')
 ('TVM prediction top-2:', 167, 'n02089973 English foxhound\n')
 ('TVM prediction top-3:', 166, 'n02089867 Walker hound, Walker foxhound\n')
 ('TVM prediction top-4:', 188, 'n02095314 wire-haired fox terrier\n')
 ('TVM prediction top-5:', 215, 'n02101388 Brittany spaniel\n')
-elapsed: 80.0ms (79.3ms)
+elapsed: 80.0 ms (79.3 ms)
 ('TVM prediction top-1:', 162, 'n02088364 beagle\n')
 ('TVM prediction top-2:', 167, 'n02089973 English foxhound\n')
 ('TVM prediction top-3:', 166, 'n02089867 Walker hound, Walker foxhound\n')
 ('TVM prediction top-4:', 188, 'n02095314 wire-haired fox terrier\n')
 ('TVM prediction top-5:', 215, 'n02101388 Brittany spaniel\n')
-elapsed: 80.0ms (79.3ms)
+elapsed: 80.0 ms (79.3 ms)
 ('TVM prediction top-1:', 162, 'n02088364 beagle\n')
 ('TVM prediction top-2:', 167, 'n02089973 English foxhound\n')
 ('TVM prediction top-3:', 166, 'n02089867 Walker hound, Walker foxhound\n')
