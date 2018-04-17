@@ -12,6 +12,8 @@ Network|Multiplier|Top-1|Top-5|
 :---:|:---:|:---:|:---:|
 MobileNet V2|1.0|72.45|90.78|
 
+More pretrained models with different `multiplier` settings would be uploaded later.
+
 ### Normalization
 
 The input images are substrated by mean RGB = [ 123.68, 116.78, 103.94 ].
@@ -52,5 +54,3 @@ Current implementation of `dmlc/nnvm` requires a merge with the PR submission [h
 ### License
 
 MIT License
-
-
