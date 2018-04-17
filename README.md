@@ -8,9 +8,9 @@ We provide pretrained MobileNet models on ImageNet, which achieve slightly bette
 
 The top-1/5 accuracy rates by using single center crop (crop size: 224x224, image size: 256xN) on validation set:
 
-Network|Top-1|Top-5|
-:---:|:---:|:---:|
-MobileNet V2| 72.45| 90.78|
+Network|Multiplier|Top-1|Top-5|
+:---:|:---:|:---:|:---:|
+MobileNet V2|1.0|72.45|90.78|
 
 ### Normalization
 
