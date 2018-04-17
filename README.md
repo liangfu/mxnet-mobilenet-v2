@@ -45,6 +45,10 @@ elapsed: 80.0 ms (79.3 ms)
 ('TVM prediction top-5:', 215, 'n02101388 Brittany spaniel\n')
 ```
 
+### Known Issues
+
+Current implementation of `dmlc/nnvm` requires a merge with the PR submission [here](https://github.com/dmlc/nnvm/pull/435). For a quick solution, you can simply add 'clip'to the `_identity_list` variable in `frontend/mxnet.py` .
+
 ### License
 
 MIT License
