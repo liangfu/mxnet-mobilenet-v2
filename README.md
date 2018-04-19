@@ -51,6 +51,10 @@ elapsed: 80.0 ms (79.3 ms)
 
 Current implementation of `dmlc/nnvm` requires a merge with the PR submission [here](https://github.com/dmlc/nnvm/pull/435). For a quick solution, you can simply add `'clip'` to the `_identity_list` variable in `frontend/mxnet.py` .
 
+### Miscellaneous
+
+For Gluon version of MobileNetV2, please refer to [chinakook/MobileNetV2.mxnet](https://github.com/chinakook/MobileNetV2.mxnet).
+
 ### License
 
 MIT License
