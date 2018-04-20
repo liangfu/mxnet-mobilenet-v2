@@ -111,8 +111,8 @@ MNETV2_CONFIGS_MAP = {
             (1, 16, 1, 1), # 32x112x112 -> 16x112x112
             (6, 24, 2, 2), # 16x112x112 -> 24x56x56
             (6, 32, 3, 2), # 24x56x56 -> 32x28x28
-            (6, 64, 4, 1), # 32x28x28 -> 64x28x28
-            (6, 96, 3, 2), # 64x28x28 -> 96x14x14
+            (6, 64, 4, 2), # 32x28x28 -> 64x14x14
+            (6, 96, 3, 1), # 64x14x14 -> 96x14x14
             (6, 160, 3, 2), # 96x14x14 -> 160x7x7
             (6, 320, 1, 1), # 160x7x7 -> 320x7x7
         ],
@@ -153,7 +153,7 @@ class MNetV2Gen(object):
                 in_c=in_c, t=t, c=int(round(c*self.multiplier)), n=n, s=s, 
                 prefix='seq-%d'%i
             )
-            in_c = c
+            in_c = int(round(c*self.multiplier))
         # last conv2d block before global pooling
         last_fm = mobilenet_unit(
             data=last_bottleneck_layer,
