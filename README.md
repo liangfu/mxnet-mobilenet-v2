@@ -10,7 +10,9 @@ The top-1/5 accuracy rates by using single center crop (crop size: 224x224, imag
 
 Network|Multiplier|Top-1|Top-5|
 :---:|:---:|:---:|:---:|
-MobileNet V2|1.0|72.45|90.78|
+MobileNet V2|1.0|~72.45~|~90.78~|
+
+**An update is working-in-progress, the pretrained params file has not been updated yet.**
 
 More pretrained models with different `multiplier` settings would be uploaded later.
 
