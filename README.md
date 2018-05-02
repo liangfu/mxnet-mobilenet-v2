@@ -27,19 +27,19 @@ Since `nnvm` is built to support neural network inference on any device enabled 
 >> python from_mxnet.py
 [14:52:11] src/runtime/opencl/opencl_device_api.cc:205: Initialize OpenCL platform 'Intel Gen OCL Driver'
 [14:52:12] src/runtime/opencl/opencl_device_api.cc:230: opencl(0)='Intel(R) HD Graphics Skylake ULT GT2' cl_device_id=0x7f091bbd2bc0
-elapsed: 2992.1ms (2991.7ms)
+elapsed: 2992.1 ms (2991.7 ms)
 ('TVM prediction top-1:', 281, 'n02123045 tabby, tabby cat\n')
 ('TVM prediction top-2:', 285, 'n02124075 Egyptian cat\n')
 ('TVM prediction top-3:', 282, 'n02123159 tiger cat\n')
 ('TVM prediction top-4:', 278, 'n02119789 kit fox, Vulpes macrotis\n')
 ('TVM prediction top-5:', 287, 'n02127052 lynx, catamount\n')
-elapsed: 63.3ms (62.8ms)
+elapsed: 63.3 ms (62.8 ms)
 ('TVM prediction top-1:', 281, 'n02123045 tabby, tabby cat\n')
 ('TVM prediction top-2:', 285, 'n02124075 Egyptian cat\n')
 ('TVM prediction top-3:', 282, 'n02123159 tiger cat\n')
 ('TVM prediction top-4:', 278, 'n02119789 kit fox, Vulpes macrotis\n')
 ('TVM prediction top-5:', 287, 'n02127052 lynx, catamount\n')
-elapsed: 62.6ms (62.1ms)
+elapsed: 62.6 ms (62.1 ms)
 ('TVM prediction top-1:', 281, 'n02123045 tabby, tabby cat\n')
 ('TVM prediction top-2:', 285, 'n02124075 Egyptian cat\n')
 ('TVM prediction top-3:', 282, 'n02123159 tiger cat\n')

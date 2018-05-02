@@ -108,7 +108,7 @@ for i in range(3):
     toc1 = time.time()
     top1 = np.argsort(tvm_output.asnumpy())[::-1][:5]
     toc2 = time.time()
-    print('elapsed: %.1fms (%.1fms)' % ((toc2-tic)*1000.,(toc1-tic)*1000.,))
+    print('elapsed: %.1f ms (%.1f ms)' % ((toc2-tic)*1000.,(toc1-tic)*1000.,))
     for i in range(5):
         print('TVM prediction top-%d:'%(i+1,), top1[i], synset[top1[i]])
 
