@@ -42,8 +42,8 @@ from matplotlib import pyplot as plt
 
 model_name = 'models/mobilenetv2-1_0'
 # symbol = get_symbol()
-# img_name = 'data/cat.jpg'
-img_name = 'data/beagle.jpg'
+img_name = 'data/cat.jpg'
+# img_name = 'data/beagle.jpg'
 synset_url = ''.join(['https://gist.githubusercontent.com/zhreshold/',
                       '4d0b62f3d01426887599d4f7ede23ee5/raw/',
                       '596b27d23537e5a1b5751d2b0481ef172f58b539/',
