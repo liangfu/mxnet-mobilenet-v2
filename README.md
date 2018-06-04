@@ -4,9 +4,9 @@ This is a MXNet implementation of MobileNetV2 architecture as described in the p
 
 ### Pretrained Models on ImageNet
 
-We provide pretrained MobileNet models on ImageNet, which achieve slightly better accuracy rates than the original ones reported in the paper. We think the improved accuracy relies on additional augmentation strategy that use 480xN as input, and random scale between 0.533 ~ 1.0 at early training stages.
+We provide pretrained MobileNet models on ImageNet, which achieve slightly lower accuracy rates than the original ones reported in the paper. We applied the augmentation strategy that use 480xN as input, and random scale between 0.533 ~ 1.0 at early training stages.
 
-The top-1/5 accuracy rates by using single center crop (crop size: 224x224, image size: 256xN) on validation set:
+Here is the top-1/5 accuracy rates by using single center crop (crop size: 224x224, image size: 256xN) on validation set:
 
 Network|Multiplier|Top-1|Top-5|
 :---:|:---:|:---:|:---:|
