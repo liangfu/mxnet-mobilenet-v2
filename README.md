@@ -4,13 +4,14 @@ This is a MXNet implementation of MobileNetV2 architecture as described in the p
 
 ### Pretrained Models on ImageNet
 
-We provide pretrained MobileNet models on ImageNet, which achieve slightly better accuracy rates than the original ones reported in the paper. We think the improved accuracy relies on additional augmentation strategy that use 480xN as input, and random scale between 0.533 ~ 1.0 at early training stages.
+We provide pretrained MobileNet models on ImageNet, which achieve slightly lower accuracy rates than the original ones reported in the paper. We applied the augmentation strategy that use 480xN as input, and random scale between 0.533 ~ 1.0 at early training stages.
 
-The top-1/5 accuracy rates by using single center crop (crop size: 224x224, image size: 256xN) on validation set:
+Here is the top-1/5 accuracy rates by using single center crop (crop size: 224x224, image size: 256xN) on validation set:
 
 Network|Multiplier|Top-1|Top-5|
 :---:|:---:|:---:|:---:|
-MobileNet V2|1.0|71.72|90.13|
+MobileNet V2|1.0|71.75|90.15|
+MobileNet V2|1.4|73.09|91.09|
 
 More pretrained models with different `multiplier` settings would be uploaded later.
 
@@ -18,7 +19,7 @@ More pretrained models with different `multiplier` settings would be uploaded la
 
 The input images are substrated by mean RGB = [ 123.68, 116.78, 103.94 ].
 
-### Inference
+### Inference with Python upon NNVM
 
 The inference python script is relatively independent from `MXNet`, it relies on `nnvm` to build a computation graph and perform the inference operations. 
 Since `nnvm` is built to support neural network inference on any device enabled with OpenCL, therefore, it's quite efficient to predict on an Intel/AMD/Mali GPU. Here is an concrete example:
@@ -45,6 +46,21 @@ elapsed: 62.6 ms (62.1 ms)
 ('TVM prediction top-3:', 282, 'n02123159 tiger cat\n')
 ('TVM prediction top-4:', 278, 'n02119789 kit fox, Vulpes macrotis\n')
 ('TVM prediction top-5:', 287, 'n02127052 lynx, catamount\n')
+```
+
+### Inference with C++ upon TVM
+
+The inference python script is relatively independent from `MXNet`, it relies on `nnvm` to build a computation graph and perform the inference operations.
+Since `nnvm` is built to support neural network inference on any device enabled with OpenCL, therefore, it's quite efficient to predict on an Intel/AMD/Mali GPU. Here is an concrete example:
+
+``` bash
+$ cd tvm-predict-cpp
+$ ./run_example.sh
+Build the libraries..
+make: Nothing to be done for 'all'.
+Run the example
+Run the deployment with all in one packed library...
+The maximum position in output vector is: 281
 ```
 
 ### Known Issues
