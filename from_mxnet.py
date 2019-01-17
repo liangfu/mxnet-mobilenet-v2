@@ -32,7 +32,10 @@ print(nnvm.__file__)
 print(tvm.__file__)
 
 target = 'opencl'
-target_to_device={'opencl':tvm.cl(0), 'llvm':tvm.cpu(0), 'cuda':tvm.gpu(0), }
+dtype = 'float32'
+ctx = tvm.context(target, 0)
+
+nnvm.compiler.build_module.BuildConfig.current = nnvm.compiler.build_module.build_config(opt_level=2)
 
 ######################################################################
 # Download Resnet18 model from Gluon Model Zoo
@@ -68,11 +71,16 @@ mx_sym, args, auxs = mx.model.load_checkpoint(model_name, 0)
 # now we use the same API to get NNVM compatible symbol
 nnvm_sym, nnvm_params = nnvm.frontend.from_mxnet(mx_sym, args, auxs)
 
+###################################
+## convert dtype to target dtype
+for k,v in nnvm_params.items():
+    nnvm_params[k] = tvm.nd.empty(v.shape, dtype, ctx).copyfrom(nnvm_params[k].asnumpy())
+
 ######################################################################
 # now compile the graph
 import nnvm.compiler
 shape_dict = {'data': x.shape}
-graph, lib, params = nnvm.compiler.build(nnvm_sym, target, shape_dict, params=nnvm_params)
+graph, lib, params = nnvm.compiler.build(nnvm_sym, target, shape_dict, params=nnvm_params, dtype=dtype)
 
 ######################################################################
 # Deploy the model
@@ -97,8 +105,6 @@ graph, lib, params = nnvm.compiler.build(nnvm_sym, target, shape_dict, params=nn
 # ---------------------------------
 # Now, we would like to reproduce the same forward computation using TVM.
 from tvm.contrib import graph_runtime
-ctx = target_to_device[target]
-dtype = 'float32'
 m = graph_runtime.create(graph, lib, ctx)
 m.set_input(**params)
 for i in range(3):
@@ -108,9 +114,9 @@ for i in range(3):
     # execute
     m.run()
     # get outputs
-    tvm_output = m.get_output(0, tvm.nd.empty((1000,), dtype))
+    tvm_output = m.get_output(0, tvm.nd.empty((1,1000), dtype))
     toc1 = time.time()
-    top1 = np.argsort(tvm_output.asnumpy())[::-1][:5]
+    top1 = np.argsort(np.squeeze(tvm_output.asnumpy()))[::-1][:5]
     toc2 = time.time()
     print('elapsed: %.1f ms (%.1f ms)' % ((toc2-tic)*1000.,(toc1-tic)*1000.,))
     for i in range(5):
