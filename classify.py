@@ -46,7 +46,7 @@ from symbols.mobilenetv2 import get_symbol
 from PIL import Image
 from matplotlib import pyplot as plt
 
-model_name = 'models/mobilenetv2-1_0'
+model_name = 'models/imagenet1k-mnetv2-1_0'
 img_name = 'data/cat.jpg'
 synset_name = 'data/imagenet1k-synset.txt'
 with open(synset_name) as f:
