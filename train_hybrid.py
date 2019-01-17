@@ -28,7 +28,7 @@ thisdir = os.path.dirname(os.path.abspath(__file__))
 
 if __name__ == '__main__':
     # parse args
-    parser = argparse.ArgumentParser(description="train imagenet-1k",
+    parser = argparse.ArgumentParser(description="train hybrid-1365",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     fit.add_fit_args(parser)
     data.add_data_args(parser)
@@ -39,15 +39,15 @@ if __name__ == '__main__':
         # network
         network          = 'mobilenetv2',
         multiplier       = 1.0, 
-        model_prefix     = os.path.join(thisdir,'models/imagenet1k-mnetv2-1_0'), 
+        model_prefix     = os.path.join(thisdir,'models/hybrid1365-mnetv2-1_0'), 
 
         # data
-        data_train       = '/home/shared/ILSVRC2012_img_train_output.rec',
-        data_train_idx   = '/home/shared/ILSVRC2012_img_train_output.idx',
-        data_val         = '/home/shared/ILSVRC2012_img_val_output.rec',
-        data_val_idx     = '/home/shared/ILSVRC2012_img_val_output.idx',
-        num_classes      = 1000,
-        num_examples     = 1281167,
+        data_train       = '/DATA1/liangfu/hybrid1365/hybrid1365_train.rec',
+        data_train_idx   = '/DATA1/liangfu/hybrid1365/hybrid1365_train.idx',
+        data_val         = '/DATA1/liangfu/hybrid1365/hybrid1365_val.rec',
+        data_val_idx     = '/DATA1/liangfu/hybrid1365/hybrid1365_val.idx',
+        num_classes      = 1365,
+        num_examples     = 1281167+1803460,
         image_shape      = '3,224,224',
         max_random_scale = 1.0,
         min_random_scale = 0.533, # if input image has min size k, suggest to use
